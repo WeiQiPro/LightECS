@@ -242,4 +242,33 @@ function ULECSID() {
     return firstUniqueString + "-" + secondUniqueString.match(/.{5}/g).join('-')
 }
 
+function instantiateLightECS(options = {}) {
+    const {
+        entities = [],
+        components = [],
+        systems = [],
+        canvasConfig = { width: Canvas.DEFAULT_WIDTH, height: Canvas.DEFAULT_HEIGHT }
+    } = options;
+
+    const entityInstance = new Entity();
+    entities.forEach(entity => entityInstance.addComponents(entity));
+
+    const systemInstance = new System();
+    systems.forEach(system => systemInstance.addFunction(system));
+
+    const graphicInstance = new Canvas(canvasConfig);
+
+    return {
+        Entity: Entity,
+        Component: Component,
+        System: System,
+        Canvas: Canvas,
+        entityInstance: entityInstance,
+        systemInstance: systemInstance,
+        graphicInstance: graphicInstance,
+        addComponentsToEntity: (entity, comps) => entity.addComponents(comps),
+        addFunctionsToSystem: (system, funcs) => system.addFunctions(funcs)
+    };
+}
+
 module.export = { Entity, Component, System, ULECSID }
