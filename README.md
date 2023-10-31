@@ -45,7 +45,7 @@ const EnergyShieldComponent = (int, defense, type, reflect = false) => {
   - removeComponent takes in a name and removes it from the entity.
   - addTag to give entity a tag
   - hasTag to see entity's tags
-  - Entity has an unique ID of 5x5 random characters
+  - Entity has an unique ID of 23 random characters
 
 ```js
 const Player = new Entity();
