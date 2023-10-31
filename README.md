@@ -82,6 +82,7 @@ EntityManager.addFunction(function getEntitiesWithComponent(componentName) {
 });
 ```
 ## Development:
+- [ ] Add example games
 - [ ] Create ability class
 - [ ] Create animation class
 - [ ] Create world class
