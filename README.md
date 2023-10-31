@@ -81,6 +81,11 @@ EntityManager.addFunction(function getEntitiesWithComponent(componentName) {
     return this.entities.filter(entity => entity[componentName]);
 });
 ```
+## Development:
+- [ ] Create ability class
+- [ ] Create animation class
+- [ ] Create world class
+
 
 ## Contribution:
 If you'd like to contribute, please fork the repository and make changes as you'd like. Pull requests are warmly welcome.
