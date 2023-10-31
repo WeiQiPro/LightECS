@@ -1,6 +1,6 @@
 class Entity {
     constructor(){
-        this.id = randomID()
+        this.id = ULECSID()
         this.tag = []
     }
 
@@ -73,16 +73,29 @@ class System {
     }
 }
 
-function randomID() {
-
-    function getRandomChar() {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        return chars.charAt(Math.floor(Math.random() * chars.length));
+function ULECSID() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    
+    function generateRandomChars(length) {
+        let result = '';
+        for (let i = 0; i < length; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
     }
 
-    function getSegment() {
-        return Array.from({ length: 5 }, getRandomChar).join('');
+    function convertToBase62(num) {
+        let result = '';
+        while (num) {
+            result = chars[num % 62] + result;
+            num = Math.floor(num / 62);
+        }
+        return result || '0';  // Handle the case when num is 0
     }
 
-    return Array.from({ length: 5 }, getSegment).join('-');
+    // Get last 5 digits of Date.now() in base 62
+    const firstUniqueString = convertToBase62(Date.now() % 100000);
+    const secondUniqueString = generateRandomChars(20);  // 20 chars for the rest of the ID
+
+    return firstUniqueString + "-" + secondUniqueString.match(/.{5}/g).join('-')
 }
