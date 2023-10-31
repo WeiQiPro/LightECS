@@ -48,7 +48,7 @@ const EnergyShieldComponent = (int, defense, type, reflect = false) => {
   - Entity has an unique ID of 23 random characters
 
 ```js
-const Player = new Entity();
+const Player = new Entity;
 
 Player.addComponent(HealthComponent(100));
 Player.addComponent(EnergyShieldComponent(10, 25, 'Energy', true));
@@ -63,7 +63,7 @@ Player.removeComponent('Health');
 
 
 ```js
-const DamageSystem = new System();
+const DamageSystem = new System;
 
 DamageSystem.addFunction(function successfulHit(attacker, defender) {
     if(attacker.attack && defender.health) {
@@ -71,7 +71,7 @@ DamageSystem.addFunction(function successfulHit(attacker, defender) {
     }
 });
 
-const EntityManager = new System();
+const EntityManager = new System;
 
 EntityManager.addProperty({ entities: [] });
 EntityManager.addFunction(function createEntity() {
