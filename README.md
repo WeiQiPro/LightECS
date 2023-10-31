@@ -88,7 +88,7 @@ EntityManager.addFunction(function getEntitiesWithComponent(componentName) {
 });
 ```
 ---
-## Canvas:
+## Graphic2d:
 ### Functionality:
 ### General
 
