@@ -73,7 +73,7 @@ class System {
     }
 }
 
-class Canvas {
+class Graphic2d {
     static DEFAULT_WIDTH = 1280;
     static DEFAULT_HEIGHT = 720;
 
