@@ -43,6 +43,9 @@ const EnergyShieldComponent = (int, defense, type, reflect = false) => {
   - addComponent adds a singular component.
   - addComponents will take an array of components.
   - removeComponent takes in a name and removes it from the entity.
+  - addTag to give entity a tag
+  - hasTag to see entity's tags
+  - Entity has an unique ID of 5x5 random characters
 
 ```js
 const Player = new Entity();
