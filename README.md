@@ -14,6 +14,36 @@ git clone https://github.com/WeiQiPro/LightECS
 - OR download the main file directly
 ---
 
+## Quick Setup
+### Returns
+  An object containing:
+
+  - Entity: The Entity class.
+  - Component: The Component class.
+  - System: The System class.
+  - Canvas: The Canvas class.
+  - entityInstance: A default entity instance with added components.
+  - systemInstance: A default system instance with added functions.
+  - graphicInstance: An instance of the Canvas, set up with provided or default configurations.
+  - addComponentsToEntity(entity, comps): A utility function to add multiple components to a given entity.
+  - addFunctionsToSystem(system, funcs): A utility function to add multiple functions to a given system.
+
+```js
+import { instantiateLightECS } from 'LightECS';
+
+const ECS = instantiateLightECS();
+
+// Create custom entities and components
+const healthComponent = new ECS.Component({ health: 100 });
+const playerEntity = new ECS.Entity();
+playerEntity.addComponent(healthComponent);
+
+// Or use instances directly
+ECS.entityInstance.addComponents([healthComponent]);
+```
+---
+
+
 ## Usage:
 
 ## Components:
