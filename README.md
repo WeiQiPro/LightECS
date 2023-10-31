@@ -34,7 +34,7 @@ import { instantiateLightECS } from 'LightECS';
 const ECS = instantiateLightECS();
 
 // Create custom entities and components
-const healthComponent = new ECS.Component({ health: 100 });
+const healthComponent = new ECS.Component({ name: 'health', health: 100 });
 const playerEntity = new ECS.Entity();
 playerEntity.addComponent(healthComponent);
 
