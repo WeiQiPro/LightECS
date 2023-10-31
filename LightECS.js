@@ -215,6 +215,76 @@ class Graphic2d {
 
 }
 
+class Animation {
+    static updateSprite(spriteComponent, deltaTime) {
+        if (spriteComponent.active) {
+            spriteComponent.elapsedTime += deltaTime;
+
+            if (spriteComponent.elapsedTime > spriteComponent.frameDuration) {
+                spriteComponent.currentFrame++;
+                spriteComponent.elapsedTime = 0;
+
+                if (spriteComponent.currentFrame >= spriteComponent.frameCount) {
+                    if (spriteComponent.loop) {
+                        spriteComponent.currentFrame = 0;
+                    } else {
+                        spriteComponent.currentFrame = spriteComponent.frameCount - 1;
+                        spriteComponent.active = false;
+                    }
+                }
+            }
+        }
+    }
+
+    static getFrame(spriteComponent) {
+        const frameWidth = spriteComponent.image.width / spriteComponent.frameCount;
+        return {
+            image: spriteComponent.image,
+            source: {
+                x: spriteComponent.currentFrame * frameWidth,
+                y: 0,
+                w: frameWidth,
+                h: spriteComponent.image.height
+            }
+        };
+    }
+    
+}
+
+class DeltaTime {
+    constructor() {
+        this.lastTime = performance.now();
+        this.current = 0; // Current delta time value
+    }
+
+    update() {
+        const now = performance.now();
+        this.current = (now - this.lastTime) / 1000.0; // Convert to seconds
+        this.lastTime = now;
+    }
+
+    get() {
+        return this.current;
+    }
+}
+
+const SpriteComponent = (name, path, frameCount, frameDuration, loop = false, active = false) => {
+    const image = new Image();
+    image.src = path;
+
+    return new Component({
+        name: name,
+        path: path,
+        frameCount: frameCount,
+        frameDuration: frameDuration,
+        loop: loop,
+        active: active,
+        currentFrame: 0,
+        elapsedTime: 0,
+        image: image
+    });
+}
+
 function ULECSID() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     
@@ -247,28 +317,29 @@ function instantiateLightECS(options = {}) {
         entities = [],
         components = [],
         systems = [],
-        canvasConfig = { width: Canvas.DEFAULT_WIDTH, height: Canvas.DEFAULT_HEIGHT }
+        canvasConfig = { width: Graphic2d.DEFAULT_WIDTH, height: Graphic2d.DEFAULT_HEIGHT }
     } = options;
 
-    const entityInstance = new Entity();
-    entities.forEach(entity => entityInstance.addComponents(entity));
-
-    const systemInstance = new System();
-    systems.forEach(system => systemInstance.addFunction(system));
-
-    const graphicInstance = new Canvas(canvasConfig);
+    const newEntity = new Entity();
+    const newSystem = new System();
+    const newGraphic2d = new Graphic2d(canvasConfig);
+    const deltaTimeInstance = new DeltaTime();
 
     return {
+        Entities: entities,
         Entity: Entity,
         Component: Component,
         System: System,
-        Canvas: Canvas,
-        entityInstance: entityInstance,
-        systemInstance: systemInstance,
-        graphicInstance: graphicInstance,
+        Graphic2d: Graphic2d,
+        Animation: Animation,
+        newEntity: newEntity,
+        newSystem: newSystem,
+        newGraphic2d: newGraphic2d,
+        deltaTime: deltaTimeInstance,
         addComponentsToEntity: (entity, comps) => entity.addComponents(comps),
-        addFunctionsToSystem: (system, funcs) => system.addFunctions(funcs)
+        addFunctionsToSystem: (system, funcs) => system.addFunctions(funcs),
+        addspriteComponent: (entity, name, path, frameCount, frameDuration, loop = false, active = false) => entity.addComponent(SpriteComponent(name, path, frameCount, frameDuration, loop, active))
     };
 }
 
-module.export = { Entity, Component, System, ULECSID }
+export default { Entity, Component, System, Animation, DeltaTime, ULECSID, instantiateLightECS, SpriteComponent }
