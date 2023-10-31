@@ -1,6 +1,6 @@
 # LightECS
 
-A lightweight, modular ECS (Entity-Component-System) engine in JavaScript.
+A lightweight, modular ECS (Entity-Component-System) engine.
 
 **Why LightECS?**  
 Unlike many ECS frameworks, LightECS offers a blend of simplicity and modularity without over-complicating the architecture. This allows developers to swiftly integrate it into their projects while retaining the flexibility to extend as needed.
